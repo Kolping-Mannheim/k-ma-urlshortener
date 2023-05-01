@@ -1,0 +1,10 @@
+{
+    "defaultURL": "https://www.kolping-mannheim.de/",
+    "urls": [{
+        "path": "shirts",
+        "url": "https://docs.google.com/forms/d/e/1FAIpQLScc3Kka1_fLMvSj8deEbt_ROTcECxnOvoxkFxNYl0BC7_QTQA/viewform"
+    },{
+        "path": "ideen",
+        "url": "https://docs.google.com/spreadsheets/d/1dmLQwLFbwB0HSkDUkkLStY8hLlaydrhA4eIpEfvKAH4/edit?usp=sharing"
+    }]
+}
