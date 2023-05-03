@@ -1,6 +1,23 @@
 <?php
-    $headers = []; 
+    $headers = [];
+    $stat = [
+        "ts" => date("Y-m-d H:i:s")
+    ]; 
+
+    $statsFromServer = [
+        "protocol" => "REQUEST_SCHEME",
+        "host" => "HTTP_HOST",
+        "lang" => "HTTP_ACCEPT_LANGUAGE",
+        "ua" => "HTTP_USER_AGENT",
+    ];
+    foreach ($statsFromServer as $key => $srvkey){
+        if (isset($_SERVER[$srvkey])){
+            $stat[$key] = $_SERVER[$srvkey]; 
+        }
+    }
+
     $cfg = null; 
+    $httpcode = 200; 
 
     $headers["X-cfg-request"] = json_encode($_REQUEST);
 
@@ -17,6 +34,7 @@
     if ($cfg){
         $headers["X-cfg-urlcount"] = isset($cfg["urls"])?sizeof($cfg["urls"]):0;
         if ($_REQUEST["k-ma-path"]){
+            $stat["path"] = $_REQUEST["k-ma-path"]; 
             // path provided, search for it
             $found = false; 
 
@@ -26,10 +44,10 @@
                         $found = true; 
                         if (isset($urlcfg["permanent"]) && $urlcfg["permanent"]){
                             // permanent redirect
-                            http_response_code(301);
+                            $httpcode = 301; 
                         } else {
                             // temporarly redirect
-                            http_response_code(302);
+                            $httpcode = 302; 
                         }
                         header("Location: ".$urlcfg["url"]);
                     }
@@ -41,14 +59,24 @@
             }
         } else {
             // default with 
-            http_response_code(302);
+            $stat["path"] = false; 
+            $httpcode = 302; 
             header("Location: ".$cfg["defaultURL"]);
         }
     } else {
         $headers["X-error"] = "no-config";
     }
 
+    $stat["httpcode"] = $httpcode; 
+    http_response_code($httpcode); 
+
     foreach ($headers as $header => $headerval){
         header($header.": ".$headerval);
+    }
+
+    try {
+        file_put_contents(__DIR__.'/stats/stats.json', json_encode($stat)."\n", FILE_APPEND);
+    } catch (Exception $e){
+
     }
 ?>
