@@ -33,7 +33,7 @@
 
     if ($cfg){
         $headers["X-cfg-urlcount"] = isset($cfg["urls"])?sizeof($cfg["urls"]):0;
-        if ($_REQUEST["k-ma-path"]){
+        if (isset($_REQUEST["k-ma-path"]) && strlen($_REQUEST["k-ma-path"]) > 0){
             $stat["path"] = $_REQUEST["k-ma-path"]; 
             // path provided, search for it
             $found = false; 
