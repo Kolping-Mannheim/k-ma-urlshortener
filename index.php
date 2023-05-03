@@ -22,7 +22,7 @@
     $headers["X-cfg-request"] = json_encode($_REQUEST);
 
     // try to load config
-    $cfg_filename = __DIR__.'/config.json';
+    $cfg_filename = __DIR__.'/config/config.json';
     if (file_exists($cfg_filename)){
         $headers["X-cfg-lastchange"] = date("Y-m-d H:i:s", filemtime($cfg_filename));
         $rawcfg = file_get_contents($cfg_filename);
