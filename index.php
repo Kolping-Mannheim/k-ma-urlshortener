@@ -9,12 +9,14 @@
         "host" => "HTTP_HOST",
         "lang" => "HTTP_ACCEPT_LANGUAGE",
         "ua" => "HTTP_USER_AGENT",
+        "ref" => "HTTP_REFERER",
     ];
     foreach ($statsFromServer as $key => $srvkey){
         if (isset($_SERVER[$srvkey])){
             $stat[$key] = $_SERVER[$srvkey]; 
         }
     }
+    // $stat["dbg"] = $_SERVER; 
 
     $cfg = null; 
     $httpcode = 200; 
