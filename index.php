@@ -42,8 +42,19 @@
 
             if (isset($cfg["urls"])){
                 foreach ($cfg["urls"] as $urlcfg){
-                    if (strtolower($urlcfg["path"]) == strtolower($_REQUEST["k-ma-path"])){
-                        $found = true; 
+                    if (is_array($urlcfg["path"])){
+                        foreach ($urlcfg["path"] as $path){
+                            if (strtolower($path) == strtolower($_REQUEST["k-ma-path"])){
+                                $found = true; 
+                            }
+                        }
+                    } else {
+                        if (strtolower($urlcfg["path"]) == strtolower($_REQUEST["k-ma-path"])){
+                            $found = true; 
+                        }
+                    }
+
+                    if ($found){
                         if (isset($urlcfg["permanent"]) && $urlcfg["permanent"]){
                             // permanent redirect
                             $httpcode = 301; 
@@ -52,6 +63,8 @@
                             $httpcode = 302; 
                         }
                         header("Location: ".$urlcfg["url"]);
+                        
+                        break; 
                     }
                 }
             }

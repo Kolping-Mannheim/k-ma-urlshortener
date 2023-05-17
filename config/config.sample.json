@@ -9,5 +9,8 @@
     },{
         "path": "termine",
         "url": "https://vor-ort.kolping.de/kolpingsfamilie-mannheim-zentral/termine/"
+    },{
+        "path": ["ig","instagram"],
+        "url": "https://www.instagram.com/kolping.mannheim/"
     }]
 }
